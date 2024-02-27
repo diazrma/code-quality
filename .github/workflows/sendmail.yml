@@ -25,6 +25,12 @@ jobs:
           ignore_cert: true
           convert_markdown: true
           priority: low
-          filename: 'text.txt'
-          attachments: 'attachments.zip,git.diff,txt,./dist/static/*.js'
-        
+          attachments: |
+                      [
+                        {
+                          "filename": "teste.txt",
+                          "path": "teste,txt",
+                          "cid": "teste.txt"
+                        }
+                      ]
+                  
