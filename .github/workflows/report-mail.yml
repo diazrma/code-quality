@@ -66,4 +66,3 @@ jobs:
           ignore_cert: true  # Change to false if using trusted certificate
           convert_markdown: true  # Convert body to HTML
           priority: low
-Use o código com cuidado.
