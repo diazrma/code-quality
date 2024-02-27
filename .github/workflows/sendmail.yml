@@ -25,12 +25,4 @@ jobs:
           ignore_cert: true
           convert_markdown: true
           priority: low
-          attachments: |
-                      [
-                        {
-                          "filename": "teste.txt",
-                          "path": "teste,txt",
-                          "cid": "teste.txt"
-                        }
-                      ]
-                  
+          attachments: teste.txt                
