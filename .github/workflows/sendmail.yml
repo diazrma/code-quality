@@ -24,5 +24,7 @@ jobs:
           body: 'Build job of ${{ github.repository }} completed successfully!'
           ignore_cert: true
           convert_markdown: true
-          attachments: ./teste.txt'
           priority: low
+          filename: 'text.txt'
+          attachments: 'attachments.zip,git.diff,txt,./dist/static/*.js'
+        
