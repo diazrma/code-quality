@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Read Rector Output
         id: read-rector-output
-        run: echo "::set-output name=rector_output::$(cat rector_output.txt)"
+
 
       - name: Send email
         uses: dawidd6/action-send-mail@v3
