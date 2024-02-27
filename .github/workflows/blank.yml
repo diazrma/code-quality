@@ -1,0 +1,32 @@
+name: Rector PHP Pipeline
+
+on:
+  push:
+    branches:
+      - main # ajuste conforme necessário
+
+jobs:
+  rector:
+    name: Run Rector PHP
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install PHP and dependencies
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+
+    - name: Install Composer
+      run: |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        php -r "unlink('composer-setup.php');"
+
+    - name: Install Rector PHP
+      run: composer require rector/rector --dev
+
+    - name: Run Rector PHP
+      run: vendor/bin/rector process src
