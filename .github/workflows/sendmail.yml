@@ -15,7 +15,7 @@ jobs:
           connection_url: ${{ secrets.MAIL_CONNECTION }}
           server_address: sandbox.smtp.mailtrap.io
           server_port: 2525
-          secure: true
+          secure: false
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: Github Actions job result
