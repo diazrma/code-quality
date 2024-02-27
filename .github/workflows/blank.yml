@@ -31,4 +31,4 @@ jobs:
     - name: Run Rector PHP
       run: |
             set -e
-            vendor/bin/rector process --dry-run || echo "Rector encountered issues, saving report" && vendor/bin/rector process --dry-run > report.txt
+            vendor/bin/rector process --dry-run > report.txt || (echo "Rector encountered issues, saving report" && cat report.txt && mail -s "Rector Error Report" rodrigo@hibrido.com.br < report.txt)
