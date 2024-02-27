@@ -22,7 +22,6 @@ jobs:
           to: 'rodrigo@hibrido.com.br'
           from: 'Luke Skywalker'
           body: 'Build job of ${{ github.repository }} completed successfully!'
-          html_body: 'file://teste.html'
           cc: 'kyloren@example.com,leia@example.com'
           bcc: 'r2d2@example.com,hansolo@example.com'
           reply_to: 'luke@example.com'
