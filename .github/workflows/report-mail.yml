@@ -32,13 +32,13 @@ jobs:
         id: rector-output
         run: |
           set -e
-          rector_output=$(vendor/bin/rector process --dry-run)
+          rector_output=$(vendor/bin/rector process --dry-run) || { echo "Rector failed with exit code $?. See below for details:" && exit 1; }
           echo "::set-output name=rector_output::$rector_output"
 
   send-mail:
     runs-on: ubuntu-latest
     needs: rector
-    if: failure() || success()
+    if: always()
     steps:
       - name: Debug Rector Output
         run: |
