@@ -30,8 +30,7 @@ jobs:
 
       - name: Run Rector PHP (dry-run)
         run: |
-          set -e
-          vendor/bin/rector process --dry-run > rector_output.txt
+          vendor/bin/rector process --dry-run > rector_output.txt || true
 
     # Send email notification (requires configuration)
   send-mail:
@@ -45,9 +44,9 @@ jobs:
       - name: Send email (configure secrets and details)
         uses: dawidd6/action-send-mail@v3
         with:
-          connection_url: ${{ secrets.MAIL_CONNECTION }}  # Replace with your connection URL
           server_address: sandbox.smtp.mailtrap.io  # Replace with your server address
           server_port: 2525  # Replace with your server port
+          connection_url: ${{ secrets.MAIL_CONNECTION }}  # Replace with your connection URL
           secure: false  # Change to true if using secure connection
           username: ${{ secrets.MAIL_USERNAME }}  # Replace with your email username (stored in secret)
           password: ${{ secrets.MAIL_PASSWORD }}  # Replace with your email password (stored in secret)
@@ -65,4 +64,4 @@ jobs:
             <pre>${{ steps.read-rector-output.outputs.rector_output }}</pre>
           ignore_cert: true  # Change to false if using trusted certificate
           convert_markdown: true  # Convert body to HTML
-          priority: low
+          priority: low  # Priority of the email
