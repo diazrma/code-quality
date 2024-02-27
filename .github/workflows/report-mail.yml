@@ -1,0 +1,67 @@
+name: Rector PHP Pipeline
+
+on:
+  push:
+    branches:
+      - main # adjust as needed
+
+jobs:
+  rector:
+    name: Run Rector PHP
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install PHP and dependencies
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+
+    - name: Install Composer
+      run: |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        php -r "unlink('composer-setup.php');"
+
+    - name: Install Rector PHP
+      run: composer require rector/rector --dev
+
+    - name: Run Rector PHP
+      run: |
+        set -e
+        vendor/bin/rector process --dry-run > rector_output.txt
+
+  send-mail:
+    runs-on: ubuntu-latest
+    needs: rector
+    steps:
+      - name: Read Rector Output
+        id: read-rector-output
+        run: echo "::set-output name=rector_output::$(cat rector_output.txt)"
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          connection_url: ${{ secrets.MAIL_CONNECTION }}
+          server_address: sandbox.smtp.mailtrap.io
+          server_port: 2525
+          secure: false
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: Github Actions job result
+          to: 'rodrigo@hibrido.com.br'
+          from: 'Luke Skywalker'
+          body: |
+            Build job of ${{ github.repository }} completed successfully!
+            Here's the output of the Rector PHP process:
+            ${{ steps.read-rector-output.outputs.rector_output }}
+          html_body: |
+            <h1>Relatório rector</h1>
+            <p>Build job of ${{ github.repository }} completed successfully!</p>
+            <p>Here's the output of the Rector PHP process:</p>
+            <pre>${{ steps.read-rector-output.outputs.rector_output }}</pre>
+          ignore_cert: true
+          convert_markdown: true
+          priority: low
