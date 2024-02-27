@@ -13,7 +13,7 @@ jobs:
         uses: dawidd6/action-send-mail@v3
         with:
           connection_url: ${{ secrets.MAIL_CONNECTION }}
-          server_address: smtp.gmail.com
+          server_address: sandbox.smtp.mailtrap.io
           server_port: 465
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
@@ -22,10 +22,6 @@ jobs:
           to: 'rodrigo@hibrido.com.br'
           from: 'Luke Skywalker'
           body: 'Build job of ${{ github.repository }} completed successfully!'
-          cc: 'kyloren@example.com,leia@example.com'
-          bcc: 'r2d2@example.com,hansolo@example.com'
-          reply_to: 'luke@example.com'
-          in_reply_to: '<random-luke@example.com>'
           ignore_cert: true
           convert_markdown: true
           attachments: 'attachments.zip,git.diff,./dist/static/*.js'
