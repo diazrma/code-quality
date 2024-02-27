@@ -11,8 +11,7 @@ use Rector\Set\ValueObject\SetList;
 return RectorConfig::configure()
     ->withFileExtensions(['php', 'phtml'])
     ->withPaths([
-        __DIR__ . '/app/code',
-        __DIR__ . '/app/design',
+        __DIR__ . '/src'
     ])
     ->withPhpSets(php81: true)
     ->withPreparedSets(codeQuality: true);
