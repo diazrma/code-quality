@@ -22,8 +22,7 @@ jobs:
           to: 'rodrigo@hibrido.com.br'
           from: 'Luke Skywalker'
           body: 'Build job of ${{ github.repository }} completed successfully!'
-          html_body: file://teste.html
           ignore_cert: true
           convert_markdown: true
-          attachments: 'attachments.zip,git.diff,./dist/static/*.js'
+          attachments: ./teste.txt'
           priority: low
