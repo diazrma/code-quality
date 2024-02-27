@@ -30,5 +30,22 @@ jobs:
 
     - name: Run Rector PHP
       run: |
-            set -e
-            vendor/bin/rector process --dry-run > report.txt || (echo "Rector encountered issues, saving report" && cat report.txt && mail -s "Rector Error Report" rodrigo@hibrido.com.br < report.txt)
+        set -e
+        vendor/bin/rector process --dry-run > report.txt || (echo "Rector encountered issues, saving report" && cat report.txt && echo "::set-env name=RECTOR_ERROR::true")
+    
+    - name: Send email on error
+      if: env.RECTOR_ERROR == 'true'
+      uses: adrianwg/action-email@v1
+      with:
+        server_address: smtp.example.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: Rector Error Report
+        to: rodrigo@hibrido.com.br
+        from: your_email@example.com
+        body: |
+          Rector encountered issues, saving report.
+          Please find the attached report.txt.
+        attachments: |
+          report.txt
