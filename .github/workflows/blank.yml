@@ -29,4 +29,6 @@ jobs:
       run: composer require rector/rector --dev
 
     - name: Run Rector PHP
-      run: vendor/bin/rector process --dry-run  > report.txt
+      run: |
+            set -e
+            vendor/bin/rector process --dry-run || echo "Rector encountered issues, saving report" && vendor/bin/rector process --dry-run > report.txt
