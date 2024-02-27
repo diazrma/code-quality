@@ -31,13 +31,19 @@ jobs:
       - name: Run Rector PHP (dry-run)
         id: rector-output
         run: |
+          set -e
           rector_output=$(vendor/bin/rector process --dry-run)
           echo "::set-output name=rector_output::$rector_output"
 
   send-mail:
     runs-on: ubuntu-latest
     needs: rector
+    if: failure() || success()
     steps:
+      - name: Debug Rector Output
+        run: |
+          echo "Rector output: ${{ steps.rector-output.outputs.rector_output }}"
+
       - name: Send email (configure secrets and details)
         uses: dawidd6/action-send-mail@v3
         with:
