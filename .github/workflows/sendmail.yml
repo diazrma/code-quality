@@ -8,7 +8,7 @@
     username: '${{secrets.MAIL_USERNAME}}'
     password: '${{secrets.MAIL_PASSWORD}}'
     subject: Github Actions job result
-    to: 'obiwan@example.com,yoda@example.com'
+    to: 'rodrigo@hibrido.com.br'
     from: Luke Skywalker
     body: 'Build job of ${{github.repository}} completed successfully!'
     html_body: 'file://README.html'
