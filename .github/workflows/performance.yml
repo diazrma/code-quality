@@ -1,28 +1,22 @@
-name: performance
+name: Lighthouse CI
 
 on:
   push:
     branches:
-      - main 
+      - main  # ajuste conforme necessário
+
 jobs:
-  lighthouseci:
+  lighthouse:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v11
         with:
-          node-version: '20'
-
-      - name: Instalar dependências e LHCI
-        run: |
-          npm install
-          npm install -g @lhci/cli@0.13.x
-
-      - name: Build do projeto
-        run: npm run build
-
-      - name: Executar LHCI
-        run: lhci autorun
+          urls: |
+            https://google.com/
+          budgetPath: ./budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
