@@ -1,0 +1,29 @@
+name: performance
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lighthouseci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependências e LHCI
+        run: |
+          npm install
+          npm install -g @lhci/cli@0.13.x
+
+      - name: Build do projeto
+        run: npm run build
+
+      - name: Executar LHCI
+        run: lhci autorun
