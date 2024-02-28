@@ -33,7 +33,6 @@ jobs:
         run: |
           set -e
           rector_output=$(vendor/bin/rector process --dry-run) 
-          echo "::set-output name=rector_output::$rector_output"
 
   send-mail:
     runs-on: ubuntu-latest
