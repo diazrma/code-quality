@@ -32,7 +32,7 @@ jobs:
         id: rector-output
         run: |
           set -e
-          rector_output=$(vendor/bin/rector process --dry-run) 
+          vendor/bin/rector process --dry-run > report.txt || (echo "Rector encountered issues, saving report" && cat report.txt && echo "::set-env name=RECTOR_ERROR::true")
 
   send-mail:
     runs-on: ubuntu-latest
